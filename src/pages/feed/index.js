@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, ActivityIndicator, Image} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, ActivityIndicator, Image, SafeAreaView, ScrollView} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -20,7 +20,7 @@ export default class Feed extends React.Component {
   
   
   getItems(){
-    fetch('http://192.168.5.23:3000/posts')
+    fetch('http://192.168.5.22:3000/posts')
     .then((response) => response.json())
     .then((responseJson) => {
       this.setState({
@@ -44,11 +44,12 @@ export default class Feed extends React.Component {
    }
 
     return (
-      <View> 
+      <SafeAreaView>
+        <ScrollView>
         {
         this.state.post.map((item) =>{
           return (
-            <TouchableOpacity>
+            <TouchableOpacity key={item.id}>
               <View style = {styles.header_post}> 
                 <Image source = {{uri: item.linkfotoperfil}} style = {styles.image_perfil_size}/>
 
@@ -66,11 +67,20 @@ export default class Feed extends React.Component {
                   <Icon name="more-horizontal" color="black" size={19}/>
                 </TouchableOpacity>
               </View>
+            
+              <TouchableOpacity>
+                <Image source = {{uri: item.imagemdopost}} style = {styles.image_post_size}/> 
+              </TouchableOpacity>
+
+              <View style = {{padding: 20}}/>
+              <View style = {styles.line}/>
             </TouchableOpacity>
           )
         })
         }
-      </View>
+          <View style = {{padding: 39}}/>
+        </ScrollView>
+      </SafeAreaView>
       
     );
 
@@ -92,11 +102,18 @@ const styles = StyleSheet.create({
 
   desciption_post: {
     fontSize: 11,
+    paddingLeft: 5
   },
 
   more_post_option_position:{
     flexDirection: 'row-reverse',
     marginEnd: 12,
+  },
+
+  image_post_size : {
+    height: 310,
+    width: '100%',
+    
   },
 
   header_post: {
@@ -106,6 +123,12 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     marginHorizontal: 7,
     
+  },
+
+  line : {
+    padding: 0.4,
+    width: '100%',
+    backgroundColor: '#F1F2F2',
   },
   
 })
