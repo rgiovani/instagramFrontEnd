@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, ActivityIndicator, Image, SafeAreaView, ScrollView} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, ActivityIndicator, Image, SafeAreaView, ScrollView, NatvigationsEvents} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -19,7 +19,7 @@ export default class Feed extends React.Component {
   }
   
   
-  getItems(){
+  async getItems(){
     fetch('http://192.168.5.22:3000/posts')
     .then((response) => response.json())
     .then((responseJson) => {
@@ -44,44 +44,44 @@ export default class Feed extends React.Component {
    }
 
     return (
-      <SafeAreaView>
-        <ScrollView>
-        {
-        this.state.post.map((item) =>{
-          return (
-            <TouchableOpacity key={item.id}>
-              <View style = {styles.header_post}> 
-                <Image source = {{uri: item.linkfotoperfil}} style = {styles.image_perfil_size}/>
+      <View>  
+          <TouchableOpacity onPress= {()=>this.props.navigation.navigate('OutrasPostagens', {id: null, linkfotoperfil: '', nome: '', descricaodopost: '', imagemdopost: ''})}>
+            <Text style={styles.adicionar_Postagem}>Adicionar Postagem</Text>
+          </TouchableOpacity>
+          {
+          this.state.post.map((item) =>{
+            return (
+                <TouchableOpacity key={item.id} onPress= {()=>this.props.navigation.navigate('OutrasPostagens', {id: item.id, nome: item.nome,  linkfotoperfil: item.linkfotoperfil, descricaodopost: item.descricaodopost, imagemdopost: item.imagemdopost})}>
+                  <View style = {styles.header_post}> 
+                    <Image source = {{uri: item.linkfotoperfil}} style = {styles.image_perfil_size}/>
 
-                <View style = {{flex: 1}}>
-                  <View style = {{paddingLeft : 7}}>
-                    <Text style = {styles.title_post}>{item.nome}</Text>
+                    <View style = {{flex: 1}}>
+                      <View style = {{paddingLeft : 7}}>
+                        <Text style = {styles.title_post}>{item.nome}</Text>
+                      </View>
+                    
+                      <View style = {styles.desciption_position}>
+                        <Text style = {styles.desciption_post}>{item.descricaodopost}</Text>
+                      </View>    
+                    </View>
+                        
+                    <TouchableOpacity style = {styles.more_post_option_position}>
+                      <Icon name="more-horizontal" color="black" size={19}/>
+                    </TouchableOpacity>
                   </View>
                 
-                  <View style = {styles.desciption_position}>
-                    <Text style = {styles.desciption_post}>{item.descricaodopost}</Text>
-                  </View>    
-                </View>
-                    
-                <TouchableOpacity style = {styles.more_post_option_position}>
-                  <Icon name="more-horizontal" color="black" size={19}/>
-                </TouchableOpacity>
-              </View>
-            
-              <TouchableOpacity>
-                <Image source = {{uri: item.imagemdopost}} style = {styles.image_post_size}/> 
-              </TouchableOpacity>
+                  <TouchableOpacity>
+                    <Image source = {{uri: item.imagemdopost}} style = {styles.image_post_size}/> 
+                  </TouchableOpacity>
 
-              <View style = {{padding: 20}}/>
-              <View style = {styles.line}/>
-            </TouchableOpacity>
-          )
-        })
-        }
+                  <View style = {{padding: 20}}/>
+                  <View style = {styles.line}/>
+                </TouchableOpacity>
+            )
+          }, {props: this.props})
+          }
           <View style = {{padding: 39}}/>
-        </ScrollView>
-      </SafeAreaView>
-      
+      </View>
     );
 
   }
@@ -129,6 +129,16 @@ const styles = StyleSheet.create({
     padding: 0.4,
     width: '100%',
     backgroundColor: '#F1F2F2',
+  },
+
+  adicionar_Postagem: {
+    marginTop: 12, 
+    borderRadius: 100, 
+    backgroundColor: '#2398AB', 
+    padding: 20, 
+    fontSize: 20, 
+    alignSelf: 'center', 
+    color: 'white'
   },
   
 })
