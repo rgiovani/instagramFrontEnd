@@ -21,15 +21,17 @@ constructor(props){
     return (
       <View>
         <View style = {styles.header_post}> 
-          <Image source = {{uri: this.state.linkfotoperfil}} style = {styles.image_perfil_size}/>
+          <TouchableOpacity>
+            <Image source = {{uri: this.state.linkfotoperfil}} style = {styles.image_perfil_size}/>
+          </TouchableOpacity>
 
           <View style = {{flex: 1}}>
-            <View style = {{paddingLeft : 7}}>
+            <TouchableOpacity style = {{paddingLeft : 7}}>
               <Text style = {styles.title_post}>{this.state.nome}</Text>
-            </View>
+            </TouchableOpacity>
                       
             <View style = {styles.desciption_position}>
-            <Text style = {styles.desciption_post}>{this.state.descricaodopost}</Text>
+              <Text style = {styles.desciption_post}>{this.state.descricaodopost}</Text>
             </View>    
           </View>
                           

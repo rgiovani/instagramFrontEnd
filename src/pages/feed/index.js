@@ -20,7 +20,7 @@ export default class Feed extends React.Component {
   
   
   async getItems(){
-    fetch('http://192.168.5.22:3000/posts')
+    fetch('http://192.168.5.23:3000/posts')
     .then((response) => response.json())
     .then((responseJson) => {
       this.setState({
@@ -45,34 +45,33 @@ export default class Feed extends React.Component {
 
     return (
       <View>  
-          <TouchableOpacity onPress= {()=>this.props.navigation.navigate('OutrasPostagens', {id: null, linkfotoperfil: '', nome: '', descricaodopost: '', imagemdopost: ''})}>
+          <TouchableOpacity onPress= {()=>this.props.navigation.navigate('NovasPostagens', {id: null, linkfotoperfil: '', nome: '', descricaodopost: '', imagemdopost: ''})}>
             <Text style={styles.adicionar_Postagem}>Adicionar Postagem</Text>
           </TouchableOpacity>
           {
           this.state.post.map((item) =>{
             return (
-                <TouchableOpacity key={item.id} onPress= {()=>this.props.navigation.navigate('OutrasPostagens', {id: item.id, nome: item.nome,  linkfotoperfil: item.linkfotoperfil, descricaodopost: item.descricaodopost, imagemdopost: item.imagemdopost})}>
+                <TouchableOpacity key={item.id} onPress= {()=>this.props.navigation.navigate('Postagens', {id: item.id, nome: item.nome,  linkfotoperfil: item.linkfotoperfil, descricaodopost: item.descricaodopost, imagemdopost: item.imagemdopost})}>
                   <View style = {styles.header_post}> 
-                    <Image source = {{uri: item.linkfotoperfil}} style = {styles.image_perfil_size}/>
 
-                    <View style = {{flex: 1}}>
+                    <TouchableOpacity>
+                      <Image source = {{uri: item.linkfotoperfil}} style = {styles.image_perfil_size}/>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style = {{flex: 1}}>
                       <View style = {{paddingLeft : 7}}>
                         <Text style = {styles.title_post}>{item.nome}</Text>
                       </View>
-                    
-                      <View style = {styles.desciption_position}>
-                        <Text style = {styles.desciption_post}>{item.descricaodopost}</Text>
-                      </View>    
-                    </View>
+                    </TouchableOpacity>
                         
                     <TouchableOpacity style = {styles.more_post_option_position}>
                       <Icon name="more-horizontal" color="black" size={19}/>
                     </TouchableOpacity>
                   </View>
                 
-                  <TouchableOpacity>
+                  <View>
                     <Image source = {{uri: item.imagemdopost}} style = {styles.image_post_size}/> 
-                  </TouchableOpacity>
+                  </View>
 
                   <View style = {{padding: 20}}/>
                   <View style = {styles.line}/>
