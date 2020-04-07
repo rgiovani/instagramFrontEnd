@@ -17,8 +17,14 @@ constructor(props){
 }
 
 salvarDados(){
-  fetch('http://192.168.5.24:3000/posts', {
-    method: 'POST',
+  let operacao = 'POST';
+  let linkFetch = 'http://192.168.5.24:3000/posts'; 
+  if (this.state.id){
+    operacao = 'PUT';
+    linkFetch = 'http://192.168.5.24:3000/posts' + '/' + this.state.id;
+  }
+  fetch(linkFetch, {
+    method: operacao,
     headers:{
       Accept: 'application/json',
       'Content-type':'application/json'
@@ -30,7 +36,7 @@ salvarDados(){
       imagemdopost: this.state.imagemdopost
     })
   }).then((retorno) => {
-      if(retorno.status == 201){
+      if(retorno.status == 201 || retorno.status == 200){
         alert('Sucesso.');
         this.voltarNaListagem();
       }
@@ -86,8 +92,8 @@ voltarNaListagem(){
           />
 
 
-          <TouchableOpacity onPress = {() => this.salvarDados()}> 
-            <Text>Salvar</Text>
+          <TouchableOpacity style = {styles.botaoSalvarPostagem} onPress = {() => this.salvarDados()}> 
+            <Text style={{fontSize: 17, color: '#FFFFFF'}}>Salvar</Text>
           </TouchableOpacity>
 
         </View> 
@@ -106,10 +112,10 @@ voltarNaListagem(){
               <Text style = {styles.desciption_post}>{this.state.descricaodopost}</Text>
             </View>    
           </View>
-                          
-          <TouchableOpacity style = {styles.more_post_option_position}>
+
+          {/* <TouchableOpacity style = {styles.more_post_option_position}>
             <Icon name="more-horizontal" color="black" size={19}/>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
                 
         <TouchableOpacity>
@@ -180,5 +186,13 @@ const styles = StyleSheet.create({
     borderColor: '#D1D3D4', 
     borderWidth: 1, 
     borderRadius: 10
+  },
+  botaoSalvarPostagem:{
+    marginVertical: 5,
+    alignSelf: 'flex-end', 
+    height: 40,
+    padding: 10,
+    borderRadius: 100,
+    backgroundColor: '#2398AB', 
   },
 })
