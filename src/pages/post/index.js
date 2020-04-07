@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -16,15 +16,87 @@ constructor(props){
   }
 }
 
+salvarDados(){
+  fetch('http://192.168.5.24:3000/posts', {
+    method: 'POST',
+    headers:{
+      Accept: 'application/json',
+      'Content-type':'application/json'
+    },
+    body: JSON.stringify({
+      nome: this.state.nome,
+      linkfotoperfil: this.state.linkfotoperfil,
+      descricaodopost: this.state.descricaodopost,
+      imagemdopost: this.state.imagemdopost
+    })
+  }).then((retorno) => {
+      if(retorno.status == 201){
+        alert('Sucesso.');
+        this.voltarNaListagem();
+      }
+  
+  })
+}
+
+voltarNaListagem(){
+  this.props.navigation.goBack();
+}
+
 
   render() {
     return (
       <View>
+          
+        <View style={{marginHorizontal: 15, marginVertical: 15}}>
+          
+          <Text>Nome: </Text>
+          <TextInput 
+          style={styles.campoTextInput}
+          onChangeText = { text => this.setState({
+            nome: text
+          }) } 
+          value ={this.state.nome}
+          />
+          <Text>Foto de perfil: </Text>
+          <TextInput 
+          style={styles.campoTextInput}
+          onChangeText = { text => this.setState({
+            linkfotoperfil: text
+          }) } 
+          value ={this.state.linkfotoperfil}
+          />
+
+          
+          <Text>Descricao da postagem: </Text>
+          <TextInput 
+          style={styles.campoTextInput}
+          onChangeText = { text => this.setState({
+            descricaodopost: text
+          }) } 
+          value ={this.state.descricaodopost}
+          />
+
+          <Text>Url da imagem da postagem: </Text>
+          <TextInput 
+          style={styles.campoTextInput}
+          onChangeText = { text => this.setState({
+            imagemdopost: text
+          }) } 
+          value ={this.state.imagemdopost}
+          />
+
+
+          <TouchableOpacity onPress = {() => this.salvarDados()}> 
+            <Text>Salvar</Text>
+          </TouchableOpacity>
+
+        </View> 
+       
         <View style = {styles.header_post}> 
           <TouchableOpacity>
             <Image source = {{uri: this.state.linkfotoperfil}} style = {styles.image_perfil_size}/>
           </TouchableOpacity>
-
+      
           <View style = {{flex: 1}}>
             <TouchableOpacity style = {{paddingLeft : 7}}>
               <Text style = {styles.title_post}>{this.state.nome}</Text>
@@ -46,7 +118,7 @@ constructor(props){
 
         <View style = {{padding: 20}}/>
           <View style = {styles.line}/>
-        </View>
+      </View>
     );
   }
 }
@@ -103,5 +175,10 @@ const styles = StyleSheet.create({
     alignSelf: 'center', 
     color: 'white'
   },
-  
+  campoTextInput: {
+    height:40, 
+    borderColor: '#D1D3D4', 
+    borderWidth: 1, 
+    borderRadius: 10
+  },
 })

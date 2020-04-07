@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {StyleSheet, View, Text, TouchableOpacity, ActivityIndicator, Image, SafeAreaView, ScrollView, NatvigationsEvents} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, ActivityIndicator, Image, SafeAreaView, ScrollView} from 'react-native';
+import {NavigationEvents} from 'react-navigation';
 
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -20,7 +21,7 @@ export default class Feed extends React.Component {
   
   
   async getItems(){
-    fetch('http://192.168.5.23:3000/posts')
+    fetch('http://192.168.5.24:3000/posts')
     .then((response) => response.json())
     .then((responseJson) => {
       this.setState({
@@ -34,7 +35,7 @@ export default class Feed extends React.Component {
 
 
   render() {
-
+    
     if (this.state.isLoading){
       return(
        <View style={{flex: 1, padding: 20}}>
@@ -45,7 +46,8 @@ export default class Feed extends React.Component {
 
     return (
       <View>  
-          <TouchableOpacity onPress= {()=>this.props.navigation.navigate('NovasPostagens', {id: null, linkfotoperfil: '', nome: '', descricaodopost: '', imagemdopost: ''})}>
+          <NavigationEvents onDidFocus={()=>this.getItems()}/>
+          <TouchableOpacity onPress= {()=>this.props.navigation.navigate('Postagens', {id: null, linkfotoperfil: '', nome: '', descricaodopost: '', imagemdopost: ''})}>
             <Text style={styles.adicionar_Postagem}>Adicionar Postagem</Text>
           </TouchableOpacity>
           {

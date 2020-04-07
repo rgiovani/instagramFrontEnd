@@ -6492,6 +6492,11 @@ react-native-tab-view@^2.11.0:
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.13.0.tgz#23037aa43b0f8f682ddc20415a4baaaf6f82ae8f"
   integrity sha512-AeYbp/u91+D/C9+PmVEPBmFb3ixv8IkLMC3Sc5MajJ/fg0Zl3Of+BcEknBvTnKoe7Fj2y8+Qf9zorBbh5xzh4A==
 
+react-native-textinput-effects-pr@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/react-native-textinput-effects-pr/-/react-native-textinput-effects-pr-0.6.1.tgz#b5a4539629c26c101c22bb2188f6d6fa05e3badf"
+  integrity sha512-1b4hRpJ4CecIucrcqAEPDtXMyz/LjwdDu2Bao3j/I2/tWd8K/aOqGYKx70KkYoCe0oUyCAmwyv64m9EJDpxONw==
+
 react-native-textinput-effects@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/react-native-textinput-effects/-/react-native-textinput-effects-0.5.1.tgz#52b54bb56b58a4b67b5d3fa4ffccba3d288cd8c9"
