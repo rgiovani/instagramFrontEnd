@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import {StyleSheet, View, Text, TouchableOpacity, ActivityIndicator, Image, SafeAreaView, ScrollView} from 'react-native';
 import {NavigationEvents} from 'react-navigation';
 
+
 import Icon from 'react-native-vector-icons/Feather';
+
 
 export default class Feed extends React.Component {
   static navigationOptions = {
@@ -18,10 +20,9 @@ export default class Feed extends React.Component {
 
     this.getItems();
   }
-  
-  
+
   async getItems(){
-    fetch('http://192.168.5.24:3000/posts')
+    fetch('http://192.168.5.25:3000/posts')
     .then((response) => response.json())
     .then((responseJson) => {
       this.setState({
@@ -45,13 +46,14 @@ export default class Feed extends React.Component {
    }
 
     return (
-      <View>  
+      <View> 
           <NavigationEvents onDidFocus={()=>this.getItems()}/>
-          <TouchableOpacity onPress= {()=>this.props.navigation.navigate('Postagens', {id: null, linkfotoperfil: '', nome: '', descricaodopost: '', imagemdopost: ''})}>
-            <Text style={styles.adicionar_Postagem}>Adicionar Postagem</Text>
+          <TouchableOpacity style={styles.adicionar_Postagem} onPress= {()=>this.props.navigation.navigate('Postagens', {id: null, linkfotoperfil: '', nome: '', descricaodopost: '', imagemdopost: ''})}>
+            <Icon name="user-plus" size={25} color="#FFFFFF" />
           </TouchableOpacity>
           {
           this.state.post.map((item) =>{
+
             return (
                 <TouchableOpacity key={item.id} onPress= {()=>this.props.navigation.navigate('Postagens', {id: item.id, nome: item.nome,  linkfotoperfil: item.linkfotoperfil, descricaodopost: item.descricaodopost, imagemdopost: item.imagemdopost})}>
                   <View style = {styles.header_post}> 
@@ -88,6 +90,8 @@ export default class Feed extends React.Component {
   }
 
 }
+
+
 
 const styles = StyleSheet.create({
   image_perfil_size: {
@@ -134,12 +138,13 @@ const styles = StyleSheet.create({
 
   adicionar_Postagem: {
     marginTop: 12, 
-    borderRadius: 100, 
-    backgroundColor: '#2398AB', 
-    padding: 20, 
+    borderRadius: 100,
+    backgroundColor: '#FF9A8B', 
+    padding: 10, 
     fontSize: 20, 
     alignSelf: 'center', 
     color: 'white'
   },
   
 })
+

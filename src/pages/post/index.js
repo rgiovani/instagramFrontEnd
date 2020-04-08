@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
-
 import Icon from 'react-native-vector-icons/Feather';
+
+
+
 
 export default class Post extends React.Component {
 constructor(props){
@@ -18,10 +20,10 @@ constructor(props){
 
 salvarDados(){
   let operacao = 'POST';
-  let linkFetch = 'http://192.168.5.24:3000/posts'; 
+  let linkFetch = 'http://192.168.5.25:3000/posts'; 
   if (this.state.id){
     operacao = 'PUT';
-    linkFetch = 'http://192.168.5.24:3000/posts' + '/' + this.state.id;
+    linkFetch = 'http://192.168.5.25:3000/posts' + '/' + this.state.id;
   }
   fetch(linkFetch, {
     method: operacao,
@@ -55,7 +57,7 @@ voltarNaListagem(){
           
         <View style={{marginHorizontal: 15, marginVertical: 15}}>
           
-          <Text>Nome: </Text>
+          <Text style = {styles.descricaoDoTextoDosCampos}>Nome: </Text>
           <TextInput 
           style={styles.campoTextInput}
           onChangeText = { text => this.setState({
@@ -63,7 +65,7 @@ voltarNaListagem(){
           }) } 
           value ={this.state.nome}
           />
-          <Text>Foto de perfil: </Text>
+          <Text style = {styles.descricaoDoTextoDosCampos}>URL da foto de perfil: </Text>
           <TextInput 
           style={styles.campoTextInput}
           onChangeText = { text => this.setState({
@@ -73,7 +75,7 @@ voltarNaListagem(){
           />
 
           
-          <Text>Descricao da postagem: </Text>
+          <Text style = {styles.descricaoDoTextoDosCampos}>Descricao da postagem: </Text>
           <TextInput 
           style={styles.campoTextInput}
           onChangeText = { text => this.setState({
@@ -82,7 +84,7 @@ voltarNaListagem(){
           value ={this.state.descricaodopost}
           />
 
-          <Text>Url da imagem da postagem: </Text>
+          <Text style = {styles.descricaoDoTextoDosCampos}>Url da imagem da postagem: </Text>
           <TextInput 
           style={styles.campoTextInput}
           onChangeText = { text => this.setState({
@@ -93,7 +95,7 @@ voltarNaListagem(){
 
 
           <TouchableOpacity style = {styles.botaoSalvarPostagem} onPress = {() => this.salvarDados()}> 
-            <Text style={{fontSize: 17, color: '#FFFFFF'}}>Salvar</Text>
+            <Icon name = "check" size ={20} color = '#FFFFFF'/>
           </TouchableOpacity>
 
         </View> 
@@ -184,8 +186,8 @@ const styles = StyleSheet.create({
   campoTextInput: {
     height:40, 
     borderColor: '#D1D3D4', 
-    borderWidth: 1, 
-    borderRadius: 10
+    borderBottomWidth: 1, 
+    borderRadius: 10,
   },
   botaoSalvarPostagem:{
     marginVertical: 5,
@@ -193,6 +195,11 @@ const styles = StyleSheet.create({
     height: 40,
     padding: 10,
     borderRadius: 100,
-    backgroundColor: '#2398AB', 
+    backgroundColor: '#FF9A8B', 
   },
+  descricaoDoTextoDosCampos:{
+    color: '#FF7272', 
+    fontWeight: 'bold',
+    marginTop: 6,
+  }
 })

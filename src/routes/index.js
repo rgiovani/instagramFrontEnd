@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import IconCheio from 'react-native-vector-icons/FontAwesome';
 import { createAppContainer } from 'react-navigation';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, View} from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 
 import Feed from '../pages/feed';
@@ -19,7 +19,7 @@ export default class Routes extends React.Component {
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
-        <TabNavigator />
+         <TabNavigator /> 
       </SafeAreaView>
     );
   }
@@ -34,11 +34,13 @@ const FeedStack = createStackNavigator({
 })
 
 const TabNavigator = createAppContainer(
+  
   createMaterialTopTabNavigator(
     {
       Feed: {
         screen: FeedStack,
         navigationOptions: {
+          
           tabBarIcon: () => <Icon name="home" size={25} color="#000" />
         }
       },
