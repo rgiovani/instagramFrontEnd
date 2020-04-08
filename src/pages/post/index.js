@@ -16,8 +16,16 @@ constructor(props){
    linkfotoperfil: props.navigation.getParam('linkfotoperfil', null), 
    descricaodopost: props.navigation.getParam('descricaodopost', null), 
    imagemdopost: props.navigation.getParam('imagemdopost', null),
+   atualizarPostagem: false,
   }
-  
+  this.cliqueParaAtualizar = this.cliqueParaAtualizar.bind(this); 
+}
+
+cliqueParaAtualizar(){
+  this.setState({
+    atualizarPostagem: true,
+  })
+
 }
 
 salvarDados(){
@@ -55,53 +63,62 @@ voltarNaListagem(){
 
 
   render() {
+
     return (
       <View>
-          
-        <View style={{marginHorizontal: 15, marginVertical: 15}}>
+        {this.state.atualizarPostagem === false  &&  Post.navigationOptions.title != 'Nova Postagem' &&
+            <TouchableOpacity style = {styles.botaoAtualizarPostagem} onPress = {() => this.cliqueParaAtualizar()}> 
+              <Icon name = "arrow-down-circle" size ={20} color = '#FFFFFF'/>
+            </TouchableOpacity>
+        }
+        {
+        (this.state.atualizarPostagem === true || Post.navigationOptions.title == 'Nova Postagem')  &&
+            <View style={{marginHorizontal: 15, marginVertical: 15}}>
 
-          <Text style = {styles.descricaoDoTextoDosCampos}>Nome: </Text>
-          <TextInput 
-          style={styles.campoTextInput}
-          onChangeText = { text => this.setState({
-            nome: text
-          }) } 
-          value ={this.state.nome}
-          />
-          <Text style = {styles.descricaoDoTextoDosCampos}>URL da foto de perfil: </Text>
-          <TextInput 
-          style={styles.campoTextInput}
-          onChangeText = { text => this.setState({
-            linkfotoperfil: text
-          }) } 
-          value ={this.state.linkfotoperfil}
-          />
+              <Text style = {styles.descricaoDoTextoDosCampos}>Nome: </Text>
+              <TextInput 
+              style={styles.campoTextInput}
+              onChangeText = { text => this.setState({
+                nome: text
+              }) } 
+              value ={this.state.nome}
+              />
+              <Text style = {styles.descricaoDoTextoDosCampos}>URL da foto de perfil: </Text>
+              <TextInput 
+              style={styles.campoTextInput}
+              onChangeText = { text => this.setState({
+                linkfotoperfil: text
+              }) } 
+              value ={this.state.linkfotoperfil}
+              />
 
-          
-          <Text style = {styles.descricaoDoTextoDosCampos}>Descricao da postagem: </Text>
-          <TextInput 
-          style={styles.campoTextInput}
-          onChangeText = { text => this.setState({
-            descricaodopost: text
-          }) } 
-          value ={this.state.descricaodopost}
-          />
+              
+              <Text style = {styles.descricaoDoTextoDosCampos}>Descricao da postagem: </Text>
+              <TextInput 
+              style={styles.campoTextInput}
+              onChangeText = { text => this.setState({
+                descricaodopost: text
+              }) } 
+              value ={this.state.descricaodopost}
+              />
 
-          <Text style = {styles.descricaoDoTextoDosCampos}>Url da imagem da postagem: </Text>
-          <TextInput 
-          style={styles.campoTextInput}
-          onChangeText = { text => this.setState({
-            imagemdopost: text
-          }) } 
-          value ={this.state.imagemdopost}
-          />
+              <Text style = {styles.descricaoDoTextoDosCampos}>Url da imagem da postagem: </Text>
+              <TextInput 
+              style={styles.campoTextInput}
+              onChangeText = { text => this.setState({
+                imagemdopost: text
+              }) } 
+              value ={this.state.imagemdopost}
+              />
 
 
-          <TouchableOpacity style = {styles.botaoSalvarPostagem} onPress = {() => this.salvarDados()}> 
-            <Icon name = "check" size ={20} color = '#FFFFFF'/>
-          </TouchableOpacity>
+              <TouchableOpacity style = {styles.botaoSalvarPostagem} onPress = {() => this.salvarDados()}> 
+                <Icon name = "check" size ={20} color = '#FFFFFF'/>
+              </TouchableOpacity>
 
-        </View> 
+            </View> 
+        }
+
        
         <View style = {styles.header_post}> 
           <TouchableOpacity>
@@ -181,10 +198,8 @@ const styles = StyleSheet.create({
     marginTop: 12, 
     borderRadius: 100, 
     backgroundColor: '#2398AB', 
-    padding: 20, 
-    fontSize: 20, 
+    padding: 20,
     alignSelf: 'center', 
-    color: 'white'
   },
   campoTextInput: {
     height:40, 
@@ -195,6 +210,15 @@ const styles = StyleSheet.create({
   botaoSalvarPostagem:{
     marginVertical: 5,
     alignSelf: 'flex-end', 
+    height: 40,
+    padding: 10,
+    borderRadius: 100,
+    backgroundColor: '#FF9A8B', 
+  },
+
+  botaoAtualizarPostagem: {
+    marginTop: 12,
+    alignSelf: 'center', 
     height: 40,
     padding: 10,
     borderRadius: 100,
