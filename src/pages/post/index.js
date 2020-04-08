@@ -66,13 +66,16 @@ voltarNaListagem(){
 
     return (
       <View>
-        {this.state.atualizarPostagem === false  &&  Post.navigationOptions.title != 'Nova Postagem' &&
+        {!this.state.atualizarPostagem &&  Post.navigationOptions.title != 'Nova Postagem' &&
             <TouchableOpacity style = {styles.botaoAtualizarPostagem} onPress = {() => this.cliqueParaAtualizar()}> 
-              <Icon name = "arrow-down-circle" size ={20} color = '#FFFFFF'/>
+             
+                  <Icon name = "arrow-down-circle" size ={20} color = '#FFFFFF'/>
+                  <Text style={{color:'white', marginLeft: 2, marginTop: 2}}>Atualizar Postagem</Text>
+               
             </TouchableOpacity>
         }
         {
-        (this.state.atualizarPostagem === true || Post.navigationOptions.title == 'Nova Postagem')  &&
+        (this.state.atualizarPostagem || Post.navigationOptions.title == 'Nova Postagem')  &&
             <View style={{marginHorizontal: 15, marginVertical: 15}}>
 
               <Text style = {styles.descricaoDoTextoDosCampos}>Nome: </Text>
@@ -223,6 +226,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 100,
     backgroundColor: '#FF9A8B', 
+    flexDirection: 'row'
   },
   descricaoDoTextoDosCampos:{
     color: '#FF7272', 
