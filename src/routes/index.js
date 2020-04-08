@@ -40,7 +40,6 @@ const TabNavigator = createAppContainer(
       Feed: {
         screen: FeedStack,
         navigationOptions: {
-          
           tabBarIcon: () => <Icon name="home" size={25} color="#000" />
         }
       },

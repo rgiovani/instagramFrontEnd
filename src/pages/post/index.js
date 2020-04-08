@@ -2,20 +2,22 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
-
-
-
 export default class Post extends React.Component {
+  static navigationOptions = {
+    title: "",
+  }
 constructor(props){
   super(props);
-
+ 
+  
   this.state = {
    id: props.navigation.getParam('id', null),
    nome: props.navigation.getParam('nome', null), 
    linkfotoperfil: props.navigation.getParam('linkfotoperfil', null), 
    descricaodopost: props.navigation.getParam('descricaodopost', null), 
-   imagemdopost: props.navigation.getParam('imagemdopost', null), 
+   imagemdopost: props.navigation.getParam('imagemdopost', null),
   }
+  
 }
 
 salvarDados(){
@@ -23,6 +25,7 @@ salvarDados(){
   let linkFetch = 'http://192.168.5.25:3000/posts'; 
   if (this.state.id){
     operacao = 'PUT';
+    
     linkFetch = 'http://192.168.5.25:3000/posts' + '/' + this.state.id;
   }
   fetch(linkFetch, {
@@ -56,7 +59,7 @@ voltarNaListagem(){
       <View>
           
         <View style={{marginHorizontal: 15, marginVertical: 15}}>
-          
+
           <Text style = {styles.descricaoDoTextoDosCampos}>Nome: </Text>
           <TextInput 
           style={styles.campoTextInput}

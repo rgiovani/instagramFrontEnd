@@ -4,7 +4,7 @@ import {NavigationEvents} from 'react-navigation';
 
 
 import Icon from 'react-native-vector-icons/Feather';
-
+import Post from '../post';
 
 export default class Feed extends React.Component {
   static navigationOptions = {
@@ -47,43 +47,53 @@ export default class Feed extends React.Component {
 
     return (
       <View> 
-          <NavigationEvents onDidFocus={()=>this.getItems()}/>
-          <TouchableOpacity style={styles.adicionar_Postagem} onPress= {()=>this.props.navigation.navigate('Postagens', {id: null, linkfotoperfil: '', nome: '', descricaodopost: '', imagemdopost: ''})}>
-            <Icon name="user-plus" size={25} color="#FFFFFF" />
-          </TouchableOpacity>
-          {
-          this.state.post.map((item) =>{
+          <ScrollView  style={{flex: 1}}>
+            <NavigationEvents onDidFocus={()=>this.getItems()}/>
+            
+            <TouchableOpacity style={styles.adicionar_Postagem} onPress= {()=>{
+              Post.navigationOptions.title = 'Nova Postagem'
+              this.props.navigation.navigate('Postagens', {id: null, linkfotoperfil: '', nome: '', descricaodopost: '', imagemdopost: ''})}
+            }>
+              <Icon name="user-plus" size={25} color="#FFFFFF" />
+            </TouchableOpacity>
+            {
+            this.state.post.map((item) =>{
+              
+              return (
+                  <TouchableOpacity key={item.id} onPress= {()=>{
+                    Post.navigationOptions.title = item.nome
+                    this.props.navigation.navigate('Postagens', {id: item.id, nome: item.nome,  linkfotoperfil: item.linkfotoperfil, descricaodopost: item.descricaodopost, imagemdopost: item.imagemdopost})} 
+                  }>
+                    
+                    <View style = {styles.header_post}> 
 
-            return (
-                <TouchableOpacity key={item.id} onPress= {()=>this.props.navigation.navigate('Postagens', {id: item.id, nome: item.nome,  linkfotoperfil: item.linkfotoperfil, descricaodopost: item.descricaodopost, imagemdopost: item.imagemdopost})}>
-                  <View style = {styles.header_post}> 
+                      <TouchableOpacity>
+                        <Image source = {{uri: item.linkfotoperfil}} style = {styles.image_perfil_size}/>
+                      </TouchableOpacity>
 
-                    <TouchableOpacity>
-                      <Image source = {{uri: item.linkfotoperfil}} style = {styles.image_perfil_size}/>
-                    </TouchableOpacity>
+                      <TouchableOpacity style = {{flex: 1}}>
+                        <View style = {{paddingLeft : 7}}>
+                          <Text style = {styles.title_post}>{item.nome}</Text>
+                        </View>
+                      </TouchableOpacity>
+                          
+                      <TouchableOpacity style = {styles.more_post_option_position}>
+                        <Icon name="more-horizontal" color="black" size={19}/>
+                      </TouchableOpacity>
+                    </View>
+                  
+                    <View>
+                      <Image source = {{uri: item.imagemdopost}} style = {styles.image_post_size}/> 
+                    </View>
 
-                    <TouchableOpacity style = {{flex: 1}}>
-                      <View style = {{paddingLeft : 7}}>
-                        <Text style = {styles.title_post}>{item.nome}</Text>
-                      </View>
-                    </TouchableOpacity>
-                        
-                    <TouchableOpacity style = {styles.more_post_option_position}>
-                      <Icon name="more-horizontal" color="black" size={19}/>
-                    </TouchableOpacity>
-                  </View>
-                
-                  <View>
-                    <Image source = {{uri: item.imagemdopost}} style = {styles.image_post_size}/> 
-                  </View>
-
-                  <View style = {{padding: 20}}/>
-                  <View style = {styles.line}/>
-                </TouchableOpacity>
-            )
-          }, {props: this.props})
-          }
-          <View style = {{padding: 39}}/>
+                    <View style = {{padding: 20}}/>
+                    <View style = {styles.line}/>
+                  </TouchableOpacity>
+              )
+            }, {props: this.props})
+            }
+            <View style = {{padding: 39}}/>
+          </ScrollView>
       </View>
     );
 
