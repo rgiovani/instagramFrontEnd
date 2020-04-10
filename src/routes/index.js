@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import IconCheio from 'react-native-vector-icons/FontAwesome';
 import { createAppContainer } from 'react-navigation';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
-import { SafeAreaView, View} from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 
 import Feed from '../pages/feed';
@@ -13,12 +13,12 @@ import NotificationScreen from '../pages/notification';
 import Search from '../pages/search';
 import Profile from '../pages/profile';
 import Postagem from '../pages/post';
-import NovasPostagens from '../pages/postNew';
 
 export default class Routes extends React.Component {
   render() {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      
+      <SafeAreaView style={{ flex: 1 }} >
          <TabNavigator /> 
       </SafeAreaView>
     );
@@ -30,7 +30,6 @@ const FeedStack = createStackNavigator({
     screen: Feed,
   },
   Postagens: Postagem,
-  NovasPostagens: NovasPostagens,
 })
 
 const TabNavigator = createAppContainer(

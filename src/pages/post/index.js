@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
 
   desciption_post: {
     fontSize: 11,
-    paddingLeft: 5
+    paddingLeft: 5,
   },
 
   more_post_option_position:{

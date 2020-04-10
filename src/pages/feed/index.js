@@ -46,8 +46,7 @@ export default class Feed extends React.Component {
    }
 
     return (
-      <View> 
-          <ScrollView  style={{flex: 1}}>
+      <ScrollView> 
             <NavigationEvents onDidFocus={()=>this.getItems()}/>
             
             <TouchableOpacity style={styles.adicionar_Postagem} onPress= {()=>{
@@ -56,10 +55,12 @@ export default class Feed extends React.Component {
             }>
               <Icon name="user-plus" size={25} color="#FFFFFF" />
             </TouchableOpacity>
+            
             {
             this.state.post.map((item) =>{
               
               return (
+                
                   <TouchableOpacity key={item.id} onPress= {()=>{
                     Post.navigationOptions.title = item.nome
                     this.props.navigation.navigate('Postagens', {id: item.id, nome: item.nome,  linkfotoperfil: item.linkfotoperfil, descricaodopost: item.descricaodopost, imagemdopost: item.imagemdopost})} 
@@ -89,12 +90,14 @@ export default class Feed extends React.Component {
                     <View style = {{padding: 20}}/>
                     <View style = {styles.line}/>
                   </TouchableOpacity>
+                
               )
             }, {props: this.props})
             }
+         
             <View style = {{padding: 39}}/>
-          </ScrollView>
-      </View>
+           
+      </ScrollView> 
     );
 
   }
