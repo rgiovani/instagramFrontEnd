@@ -18,12 +18,12 @@ constructor(props){
    imagemdopost: props.navigation.getParam('imagemdopost', null),
    atualizarPostagem: false,
   }
-  this.cliqueParaAtualizar = this.cliqueParaAtualizar.bind(this); 
+  this.cliqueParaMostrarAtualizar = this.cliqueParaMostrarAtualizar.bind(this); 
 }
 
-cliqueParaAtualizar(){
+cliqueParaMostrarAtualizar(){
   this.setState({
-    atualizarPostagem: true,
+    atualizarPostagem: !this.state.atualizarPostagem,
   })
 
 }
@@ -67,15 +67,14 @@ voltarNaListagem(){
     return (
       <View>
         {!this.state.atualizarPostagem &&  Post.navigationOptions.title != 'Nova Postagem' &&
-            <TouchableOpacity style = {styles.botaoAtualizarPostagem} onPress = {() => this.cliqueParaAtualizar()}> 
+            <TouchableOpacity style = {styles.botaoAtualizarPostagem} onPress = {() => this.cliqueParaMostrarAtualizar()}> 
              
                   <Icon name = "arrow-down-circle" size ={20} color = '#FFFFFF'/>
                   <Text style={{color:'white', marginLeft: 2, marginTop: 2}}>Atualizar Postagem</Text>
                
             </TouchableOpacity>
         }
-        {
-        (this.state.atualizarPostagem || Post.navigationOptions.title == 'Nova Postagem')  &&
+        {(this.state.atualizarPostagem || Post.navigationOptions.title == 'Nova Postagem')  &&
             <View style={{marginHorizontal: 15, marginVertical: 15}}>
 
               <Text style = {styles.descricaoDoTextoDosCampos}>Nome: </Text>
@@ -113,12 +112,31 @@ voltarNaListagem(){
               }) } 
               value ={this.state.imagemdopost}
               />
+              
+              <View style={{flexDirection: 'row'}}>
+                {Post.navigationOptions.title == 'Nova Postagem' &&
+                  <View>
+                    <TouchableOpacity style = {styles.botaoVoltarFeed} onPress = {() => this.voltarNaListagem()}> 
+                      <Icon name = "arrow-left-circle" size ={20} color = '#FFFFFF'/>
+                    </TouchableOpacity>
+                  </View>
+                }
 
-
-              <TouchableOpacity style = {styles.botaoSalvarPostagem} onPress = {() => this.salvarDados()}> 
-                <Icon name = "check" size ={20} color = '#FFFFFF'/>
-              </TouchableOpacity>
-
+                {Post.navigationOptions.title != 'Nova Postagem' &&
+                  <View>
+                    <TouchableOpacity style = {styles.botaoVoltarFeed} onPress = {() => this.cliqueParaMostrarAtualizar()}> 
+                      <Icon name = "arrow-up-circle" size ={20} color = '#FFFFFF'/>
+                    </TouchableOpacity>
+                  </View>
+                }
+                  <View style={{flex:1}}/>
+                  
+                  <View style={{flexDirection: 'row-reverse'}}>
+                    <TouchableOpacity style = {styles.botaoSalvarPostagem} onPress = {() => this.salvarDados()}> 
+                      <Icon name = "check" size ={20} color = '#FFFFFF'/>
+                    </TouchableOpacity>
+                  </View>
+              </View>
             </View> 
         }
 
@@ -138,9 +156,11 @@ voltarNaListagem(){
             </View>    
           </View>
 
-          {/* <TouchableOpacity style = {styles.more_post_option_position}>
+          {(Post.navigationOptions.title != 'Nova Postagem') &&
+          <TouchableOpacity style = {styles.more_post_option_position}>
             <Icon name="more-horizontal" color="black" size={19}/>
-          </TouchableOpacity> */}
+          </TouchableOpacity> 
+          }
         </View>
                 
         <TouchableOpacity>
@@ -211,12 +231,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   botaoSalvarPostagem:{
-    marginVertical: 5,
-    alignSelf: 'flex-end', 
+    marginVertical: 12,
     height: 40,
     padding: 10,
     borderRadius: 100,
-    backgroundColor: '#FF9A8B', 
+    backgroundColor: '#70E852',
+  },
+
+  botaoVoltarFeed:{
+    marginVertical: 12,
+    height: 40,
+    padding: 10,
+    borderRadius: 100,
+    backgroundColor: '#F85C50', 
   },
 
   botaoAtualizarPostagem: {
